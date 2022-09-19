@@ -1,8 +1,8 @@
 package egym.omar.egymtask
 
-import android.app.Application
 import dagger.android.AndroidInjector
 import dagger.android.DaggerApplication
+import egym.omar.egymtask.di.DaggerAppComponent
 
 class EGYMApp: DaggerApplication() {
     private val applicationInjector = DaggerAppComponent.builder().application(this).build()
