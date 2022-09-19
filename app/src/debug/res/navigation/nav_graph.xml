@@ -2,10 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/images_list_fragment">
+    app:startDestination="@id/stories_list_fragment">
 
     <fragment
-        android:id="@+id/images_list_fragment"
+        android:id="@+id/stories_list_fragment"
         android:name="egym.omar.egymtask.fragments.StoriesListFragment"
         android:label="StoriesListFragment">
     </fragment>

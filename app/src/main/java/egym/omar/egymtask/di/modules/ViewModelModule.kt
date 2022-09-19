@@ -1,6 +1,7 @@
 package egym.omar.egymtask.di.modules
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import dagger.Binds
 import dagger.MapKey
 import dagger.Module
@@ -13,7 +14,12 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(StoriesListViewModel::class)
-    abstract fun bindImagesListViewModel(imagesListViewModel: StoriesListViewModel): ViewModel
+    abstract fun bindStoriesListViewModel(imagesListViewModel: StoriesListViewModel): ViewModel
+
+
+
+    @Binds
+    abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
 }
 
 @MustBeDocumented
