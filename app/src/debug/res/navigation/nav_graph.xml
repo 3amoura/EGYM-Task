@@ -6,7 +6,39 @@
 
     <fragment
         android:id="@+id/stories_list_fragment"
-        android:name="egym.omar.egymtask.fragments.StoriesListFragment"
+        android:name="egym.omar.egymtask.fragments.stories_list.StoriesListFragment"
         android:label="StoriesListFragment">
+        <action
+            android:id="@+id/to_storyDetailsFragment"
+            app:destination="@id/story_details_fragment" />
+
+        <action
+            android:id="@+id/to_webViewFragment"
+            app:destination="@id/story_details_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/story_details_fragment"
+        android:name="egym.omar.egymtask.fragments.story_details.StoryDetailsFragment"
+        android:label="StoryDetailsFragment">
+
+        <argument
+            android:name="topStory"
+            app:argType="egym.omar.egymtask.data.models.TopStory"
+            app:nullable="false" />
+
+        <action
+            android:id="@+id/to_webViewFragment"
+            app:destination="@id/web_view_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/web_view_fragment"
+        android:name="egym.omar.egymtask.fragments.web_view_fragment.WebViewFragment"
+        android:label="WebViewFragment">
+
+        <argument
+            android:name="url"
+            app:argType="java.lang.String"
+            app:nullable="false" />
+
     </fragment>
 </navigation>

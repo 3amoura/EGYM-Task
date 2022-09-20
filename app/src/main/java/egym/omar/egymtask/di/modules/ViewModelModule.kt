@@ -6,7 +6,7 @@ import dagger.Binds
 import dagger.MapKey
 import dagger.Module
 import dagger.multibindings.IntoMap
-import egym.omar.egymtask.fragments.StoriesListViewModel
+import egym.omar.egymtask.fragments.stories_list.StoriesListViewModel
 import kotlin.reflect.KClass
 
 @Module
@@ -14,9 +14,7 @@ abstract class ViewModelModule {
     @Binds
     @IntoMap
     @ViewModelKey(StoriesListViewModel::class)
-    abstract fun bindStoriesListViewModel(imagesListViewModel: StoriesListViewModel): ViewModel
-
-
+    abstract fun bindStoriesListViewModel(storiesListViewModel: StoriesListViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

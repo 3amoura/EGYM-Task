@@ -1,11 +1,8 @@
 package egym.omar.egymtask.activities
 
 import android.os.Bundle
-import androidx.fragment.app.FragmentTransaction
-import dagger.android.DaggerActivity
 import dagger.android.support.DaggerAppCompatActivity
 import egym.omar.egymtask.databinding.ActivityMainBinding
-import egym.omar.egymtask.fragments.StoriesListFragment
 
 class MainActivity : DaggerAppCompatActivity() {
 

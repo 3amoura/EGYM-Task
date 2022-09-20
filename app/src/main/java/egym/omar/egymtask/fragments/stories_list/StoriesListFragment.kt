@@ -1,13 +1,16 @@
-package egym.omar.egymtask.fragments
+package egym.omar.egymtask.fragments.stories_list
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import dagger.android.support.DaggerFragment
 import egym.omar.egymtask.R
 import egym.omar.egymtask.adapters.TopStoriesAdapter
+import egym.omar.egymtask.data.models.TopStory
 import egym.omar.egymtask.databinding.FragmentStoriesListBinding
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -32,8 +35,11 @@ class StoriesListFragment : DaggerFragment(R.layout.fragment_stories_list) {
     private fun observe() {
         viewModel.topStories.observe(viewLifecycleOwner) {
             val topStories = it.results
-            val adapter = TopStoriesAdapter(topStories)
+            val adapter = TopStoriesAdapter(topStories) {
+                    topStory -> navigate(topStory)
+            }
             binding.topStoriesRecyclerView.adapter = adapter
+            binding.progressBar.isVisible = false
         }
     }
 
@@ -44,9 +50,9 @@ class StoriesListFragment : DaggerFragment(R.layout.fragment_stories_list) {
         }
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance() =
-            StoriesListFragment()
+    private fun navigate(topStory: TopStory) {
+        val action = StoriesListFragmentDirections.toStoryDetailsFragment(topStory)
+        binding.root.findNavController()
+            .navigate(action)
     }
 }

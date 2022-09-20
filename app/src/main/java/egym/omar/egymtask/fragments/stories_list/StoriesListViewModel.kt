@@ -1,4 +1,4 @@
-package egym.omar.egymtask.fragments
+package egym.omar.egymtask.fragments.stories_list
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
