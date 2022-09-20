@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import dagger.android.support.DaggerFragment
 import egym.omar.egymtask.R
 import egym.omar.egymtask.adapters.TopStoriesAdapter
@@ -21,6 +22,7 @@ import javax.inject.Inject
 class StoriesListFragment : DaggerFragment(R.layout.fragment_stories_list) {
 
     private lateinit var binding: FragmentStoriesListBinding
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val viewModel: StoriesListViewModel by viewModels {
@@ -45,8 +47,8 @@ class StoriesListFragment : DaggerFragment(R.layout.fragment_stories_list) {
             topStoriesList.let {
                 Log.d("StoriesListViewModel", "Stories loaded")
                 val topStories = it.results
-                val adapter = TopStoriesAdapter(topStories) {
-                        topStory -> navigate(topStory)
+                val adapter = TopStoriesAdapter(topStories) { topStory ->
+                    navigate(topStory)
                 }
                 binding.topStoriesRecyclerView.adapter = adapter
                 binding.progressBar.isVisible = false
@@ -67,8 +69,10 @@ class StoriesListFragment : DaggerFragment(R.layout.fragment_stories_list) {
     }
 
     private fun navigate(topStory: TopStory) {
-        val action = StoriesListFragmentDirections.toStoryDetailsFragment(topStory)
-        binding.root.findNavController()
-            .navigate(action)
+        findNavController().currentDestination?.getAction(R.id.to_storyDetailsFragment)?.let {
+            val action = StoriesListFragmentDirections.toStoryDetailsFragment(topStory)
+            binding.root.findNavController()
+                .navigate(action)
+        }
     }
 }
