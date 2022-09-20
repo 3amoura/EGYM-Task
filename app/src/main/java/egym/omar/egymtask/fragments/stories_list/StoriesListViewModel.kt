@@ -1,6 +1,7 @@
 package egym.omar.egymtask.fragments.stories_list
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -15,10 +16,17 @@ class StoriesListViewModel @Inject constructor(
     app: Application, private val repository: Repository
 ) : AndroidViewModel(app) {
     var topStories = MutableLiveData<TopStoriesResponse>()
+    var failed = MutableLiveData<String>()
 
     fun getTopStories() = viewModelScope.launch(Dispatchers.Default) {
         withContext(Dispatchers.Main) {
-            topStories.value = repository.getTopStories()
+            try {
+                Log.d("StoriesListViewModel", "Will load the stories")
+                topStories.value = repository.getTopStories()
+            } catch (e: java.lang.Exception) {
+                Log.e("StoriesListViewModel", e.localizedMessage!!)
+                failed.value = e.localizedMessage!!
+            }
         }
     }
 }

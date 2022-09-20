@@ -1,7 +1,9 @@
 package egym.omar.egymtask.fragments.stories_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -39,17 +41,26 @@ class StoriesListFragment : DaggerFragment(R.layout.fragment_stories_list) {
     }
 
     private fun observe() {
-        viewModel.topStories.observe(viewLifecycleOwner) {
-            val topStories = it.results
-            val adapter = TopStoriesAdapter(topStories) {
-                    topStory -> navigate(topStory)
+        viewModel.topStories.observe(viewLifecycleOwner) { topStoriesList ->
+            topStoriesList.let {
+                Log.d("StoriesListViewModel", "Stories loaded")
+                val topStories = it.results
+                val adapter = TopStoriesAdapter(topStories) {
+                        topStory -> navigate(topStory)
+                }
+                binding.topStoriesRecyclerView.adapter = adapter
+                binding.progressBar.isVisible = false
             }
-            binding.topStoriesRecyclerView.adapter = adapter
+        }
+
+        viewModel.failed.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = false
+            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         }
     }
 
     private fun getTopStories() {
+        job?.cancel()
         job = lifecycleScope.launch {
             viewModel.getTopStories()
         }
