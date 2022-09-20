@@ -29,7 +29,13 @@ class StoriesListFragment : DaggerFragment(R.layout.fragment_stories_list) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentStoriesListBinding.bind(view)
         observe()
-        getTopStories()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (job == null) {
+            getTopStories()
+        }
     }
 
     private fun observe() {
@@ -44,7 +50,6 @@ class StoriesListFragment : DaggerFragment(R.layout.fragment_stories_list) {
     }
 
     private fun getTopStories() {
-        job?.cancel()
         job = lifecycleScope.launch {
             viewModel.getTopStories()
         }
