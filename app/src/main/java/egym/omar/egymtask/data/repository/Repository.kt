@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class Repository @Inject constructor(private val topStoriesService: TopStoriesService) {
     suspend fun getTopStories(): TopStoriesResponse {
-        return topStoriesService.getTopStories()
+        return topStoriesService.getTopStories().execute().body()!!
     }
 }

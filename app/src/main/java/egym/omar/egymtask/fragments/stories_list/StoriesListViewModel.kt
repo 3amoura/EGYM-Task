@@ -19,13 +19,20 @@ class StoriesListViewModel @Inject constructor(
     var failed = MutableLiveData<String>()
 
     fun getTopStories() = viewModelScope.launch(Dispatchers.Default) {
-        withContext(Dispatchers.Main) {
+        withContext(Dispatchers.IO) {
             try {
                 Log.d("StoriesListViewModel", "Will load the stories")
-                topStories.value = repository.getTopStories()
+                val respone = repository.getTopStories()
+                withContext(Dispatchers.Main) {
+                    topStories.value = respone
+                }
             } catch (e: java.lang.Exception) {
-                Log.e("StoriesListViewModel", e.localizedMessage!!)
-                failed.value = e.localizedMessage!!
+                e.localizedMessage?.let {
+                    Log.e("StoriesListViewModel", it)
+                    withContext(Dispatchers.Main) {
+                        failed.value = it
+                    }
+                }
             }
         }
     }

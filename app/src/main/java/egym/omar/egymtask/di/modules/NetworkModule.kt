@@ -2,10 +2,10 @@ package egym.omar.egymtask.di.modules
 
 import dagger.Module
 import dagger.Provides
+import egym.omar.egymtask.BuildConfig
 import egym.omar.egymtask.Constants
 import egym.omar.egymtask.api.TopStoriesService
 import okhttp3.HttpUrl
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import retrofit2.Retrofit
@@ -27,7 +27,7 @@ object NetworkModule {
         }.build()
 
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
